@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoteng.server.mapper.ProductMapper">
+
+
+    <select id="pageQuery" parameterType="com.xiaoteng.data.dto.ProductQueryDTO" resultType="com.xiaoteng.data.vo.ProductVO">
+        select
+        p.id,
+        p.category_id as categoryId,
+        c.name as categoryName,
+        p.name,
+        p.sub_title as subTitle,
+        p.price,
+        p.stock,
+        p.cover_image as coverImage,
+        p.description,
+        p.status,
+        case
+        when p.status = 1 then '上架'
+        when p.status = 0 then '下架'
+        else '未知'
+        end as statusDesc,
+        p.create_time as createTime,
+        p.update_time as updateTime
+        from loginauthentication_schema.product p
+        left join loginauthentication_schema.product_category c
+        on p.category_id = c.id
+        <where>
+            p.deleted = 0
+            and c.deleted = 0
+
+            <if test="name != null and name != ''">
+                and p.name like concat('%', #{name}, '%')
+            </if>
+
+            <if test="status != null">
+                and p.status = #{status}
+            </if>
+        </where>
+        order by p.id desc
+    </select>
+
+</mapper>

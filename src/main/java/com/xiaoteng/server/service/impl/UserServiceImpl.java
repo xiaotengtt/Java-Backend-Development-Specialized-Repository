@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
                 //用户存在且登录成功
                 //生成JWT
                 String token = JWTUtils.generateToken(sysUser.getId().toString());
+                log.info("token：{}",token);
                 UserLoginVO userLoginVO = new UserLoginVO();
                 BeanUtils.copyProperties(sysUser,userLoginVO);
                 userLoginVO.setToken(token);

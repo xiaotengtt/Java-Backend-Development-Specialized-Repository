@@ -6,8 +6,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
-//TODO 拦截器配置类
-
 @Configuration
 public class LoginInterceptorConfig implements WebMvcConfigurer {
     
@@ -22,10 +20,10 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor)
                 //要拦截哪些路径
-                .addPathPatterns("/**")
+                .addPathPatterns("/api/**")
                 //不拦截哪些路径
                 .excludePathPatterns(
-                        "/login/**",
+                        "/api/login/**",
                         "/register",
                         "/error",
                         "/static/**",
