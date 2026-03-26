@@ -13,5 +13,5 @@ public interface UserService {
      */
     UserLoginVO login(UserLoginDTO userLoginDTO);
     
-    SysUser queryUserById(Integer id);
+    SysUser queryUserById(Long id);
 }

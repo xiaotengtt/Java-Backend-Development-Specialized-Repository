@@ -10,7 +10,7 @@ public interface UserMapper {
     
     //根据用户ID查询信息
     @Select("SELECT * FROM loginauthentication_schema.sys_user WHERE ID = #{id}")
-    SysUser queryUserById(Integer id);
+    SysUser queryUserById(Long id);
     
     
     //根据用户名、手机号、邮箱查询用户信息

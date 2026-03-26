@@ -40,7 +40,7 @@ public class UserController {
      * 用户查询功能的实现
      */
     @GetMapping("/query")
-    public Result<SysUser>  queryUserById(@RequestParam("id") Integer id)
+    public Result<SysUser>  queryUserById(@RequestParam("id") Long id)
     {
         SysUser user = userServiceImpl.queryUserById(id);
         

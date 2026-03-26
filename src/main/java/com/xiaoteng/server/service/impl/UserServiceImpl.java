@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 根据ID查询用户
      */
-    public SysUser queryUserById(Integer id) {
+    public SysUser queryUserById(Long id) {
         return userMapper.queryUserById(id);
     }
 }
