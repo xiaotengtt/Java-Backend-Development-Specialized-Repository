@@ -1,6 +1,0 @@
-SERVER_PORT: 8080
-SERVER_CONTEXT_PATH: /api       #所有接口的前缀
-
-DB_URL: jdbc:mysql://localhost:3306/loginauthentication_schema?useUnicode=true&characterEncoding=UTF-8
-DB_USERNAME: root
-DB_PASSWORD: 123456
