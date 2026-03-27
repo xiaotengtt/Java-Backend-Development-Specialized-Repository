@@ -1,49 +1,54 @@
 server:
-  port: ${SERVER_PORT} # 服务启动端口，例如 8080
+  port: ${SERVER_PORT:8080}
 
   servlet:
-    context-path: ${SERVER_CONTEXT_PATH} # 项目统一访问前缀，例如 /api
+    context-path: ${SERVER_CONTEXT_PATH:/api}
     session:
-      timeout: 30m # Session 超时时间，30分钟
+      timeout: 30m
     encoding:
-      enabled: true # 是否启用字符编码过滤
-      charset: UTF-8 # 统一字符集
-      force: true # 强制请求和响应使用 UTF-8
+      enabled: true
+      charset: UTF-8
+      force: true
 
   tomcat:
     threads:
-      max: 200 # Tomcat 最大工作线程数
-      min-spare: 10 # Tomcat 最小空闲线程数
-    max-connections: 8192 # Tomcat 最大连接数
-    accept-count: 100 # 当线程忙不过来时，最大排队等待连接数
-    connection-timeout: 20000 # 连接超时时间，单位毫秒
-    accesslog:
-      enabled: true # 是否开启 Tomcat 访问日志
-      directory: logs # 访问日志输出目录
-      pattern: '%h %l %u %t "%r" %s %b %D' # 访问日志格式
+      max: 200
+      min-spare: 10
+    max-connections: 8192
+    accept-count: 100
+    connection-timeout: 20000
+    access-log:
+      enabled: true
+      directory: logs
+      pattern: '%h %l %u %t "%r" %s %b %D'
 
 spring:
   application:
-    name: LoginAuthentication # Spring Boot 应用名称
+    name: LoginAuthentication
 
   main:
     allow-bean-definition-overriding: true
 
   profiles:
-    active: dev # 当前激活的环境配置文件，会自动加载 application-dev.yml
+    active: dev
 
   datasource:
-    url: ${DB_URL} # 数据库连接地址
-    username: ${DB_USERNAME} # 数据库用户名
-    password: ${DB_PASSWORD} # 数据库密码
-    driver-class-name: com.mysql.cj.jdbc.Driver # MySQL 8 驱动类
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 50MB
 
 mybatis:
   mapper-locations: classpath*:mapper/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
 
-pagehelper:
+page-helper:
   helperDialect: mysql
   reasonable: true
   supportMethodsArguments: true
@@ -51,30 +56,44 @@ pagehelper:
   autoRuntimeDialect: false
 
 knife4j:
-  enable: true # 是否启用 Knife4j 接口文档
+  enable: true
   setting:
-    language: zh_cn # Knife4j 页面语言：中文
+    language: zh_cn
 
 springdoc:
   api-docs:
-    enabled: true # 是否启用 OpenAPI 原始文档接口
-    path: /v3/api-docs # OpenAPI JSON 文档访问路径
+    enabled: true
+    path: /v3/api-docs
   swagger-ui:
-    enabled: true # 是否启用 Swagger UI 相关能力，Knife4j 底层会用到
+    enabled: true
 
 logging:
   level:
     root: info
-    com.xiaoteng: info # 你自己项目包下的日志级别
+    com.xiaoteng: info
     org.springframework.boot.autoconfigure: info
 
 jwt:
-  secret: "your_secret_key_here" # JWT 签名密钥，务必保密
-  expiration: 3600 # Token 有效期（秒），1小时
-  refresh-expiration: 86400 # 刷新 Token 有效期（秒），1天
-  header: "Authorization" # HTTP 请求头中携带 token 的字段
-  prefix: "Bearer " # token 前缀
-  issuer: "your-app-name" # JWT 签发者
-  subject: "user" # JWT subject 字段，可自定义
-  algorithm: "HS256" # 签名算法，可选 HS256 / RS256 等
-  clock-skew: 60 # 允许的时间偏差（秒），避免时间微小误差导致过期
+  secret: ${JWT_SECRET:your_secret_key_here}
+  expiration: 3600
+  refresh-expiration: 86400
+  header: Authorization
+  prefix: "Bearer "
+  issuer: your-app-name
+  subject: user
+  algorithm: HS256
+  clock-skew: 60
+
+aliyun:
+  oss:
+    endpoint: ${OSS_ENDPOINT}
+    region: ${OSS_REGION}
+    bucket-name: ${OSS_BUCKET_NAME}
+    url-prefix: ${OSS_URL_PREFIX}
+    access-key-id: ${OSS_ACCESS_KEY_ID}
+    access-key-secret: ${OSS_ACCESS_KEY_SECRET}
+
+file:
+  path:
+    prefix: upload
+    use-date-path: true
